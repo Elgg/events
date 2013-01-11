@@ -1,7 +1,7 @@
 Events
 ======
 
-Event support for Elgg. Allows users of your network to:
+Event support for Elgg. First version will allow users of your network to:
 
  * Create and modify events
  * RSVP to events
