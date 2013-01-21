@@ -4,3 +4,4 @@
  */
 
 update_subtype('object', 'event');
+update_subtype('object', 'location');

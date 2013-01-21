@@ -22,6 +22,11 @@ class ElggEvent extends ElggObject {
 	 */
 	const RSVP_NAME = "rsvp";
 
+	/**
+	 * Relationship name for location
+	 */
+	const LOCATION_NAME = "hasLocation";
+
 	/** @override */
 	protected function initializeAttributes() {
 		$this->attributes['subtype'] = 'event';
@@ -99,4 +104,23 @@ class ElggEvent extends ElggObject {
 		$this->calendar_end = $endTime->getTimestamp();
 	}
 
+	/**
+	 * @return ElggLocation The location of this event.
+	 */
+	public function getLocation() {
+		// inverse relationship means we are querying for guid_one
+		return elgg_get_entities_from_relationship(array(
+			'type' => 'object',
+			'subtype' => 'location',
+			'relationship' => ElggEvent::LOCATION_NAME,
+			'relationship_guid' => $this->guid,
+			'inverse_relationship' => true,
+			'limit' => 1,
+		));
+	}
+
+	public function setLocation(ElggLocation $location) {
+		remove_entity_relationships($this->guid, ElggEvent::LOCATION_NAME);
+		$this->addRelationship($location->guid, ElggEvent::LOCATION_NAME);
+	}
 }
