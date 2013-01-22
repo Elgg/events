@@ -109,7 +109,7 @@ class ElggEvent extends ElggObject {
 	 */
 	public function getLocation() {
 		// inverse relationship means we are querying for guid_one
-		return elgg_get_entities_from_relationship(array(
+		$location = elgg_get_entities_from_relationship(array(
 			'type' => 'object',
 			'subtype' => 'location',
 			'relationship' => ElggEvent::LOCATION_NAME,
@@ -117,6 +117,11 @@ class ElggEvent extends ElggObject {
 			'inverse_relationship' => true,
 			'limit' => 1,
 		));
+		if ($location) {
+			return $location[0];
+		} else {
+			return null;
+		}
 	}
 
 	public function setLocation(ElggLocation $location) {
